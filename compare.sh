@@ -8,11 +8,10 @@ mkdir ./Outputs/MEM_Diff
 mkdir ./Outputs/Diff
 rm -f ./Outputs/IO_Diff/*
 rm -f ./Outputs/MEM_Diff/*
-rm -f ./Outputs/Diff/*
 
-CompID=1
-Suffix=AdvN50T2V2
-IO_Constant=1
+CompID=3
+Suffix=RRV1
+IO_Constant=0
 
 # Read Outputs/CPU_Data.txt
 while read -r line;do IFS= cpu_data+=(${line}); done < "./Outputs/CPU_Data${Suffix}.txt"
@@ -94,10 +93,9 @@ for i in {0..8} ; do
   min=$(datamash -s min 1 < ./Outputs/MEM_Diff/cpu_array${i}.txt)
   diff=$(echo "$max - $min" | bc)
   ip=$(echo "$i + 1" | bc)
-  printf '%3s ' "0.${ip}" >> "./Outputs/Diff/CPU-MEM-Matrix-${CompID}.txt"
+
   while read file; do
     printf '%.6f ' $file >> "./Outputs/Diff/CPU-MEM-Matrix-${CompID}.txt"
   done < ./Outputs/MEM_Diff/cpu_array${i}.txt
   printf '\n' >> "./Outputs/Diff/CPU-MEM-Matrix-${CompID}.txt"
 done
-printf '    0.1      0.2      0.3      0.4      0.5      0.6      0.7      0.8      0.9\n' >> "./Outputs/Diff/CPU-MEM-Matrix-${CompID}.txt"
