@@ -11,7 +11,7 @@ rm -f ./Outputs/CPU/*
 rm -f ./Outputs/Graph/*
 rm -f ./Outputs/GData/*
 
-Suffix=AdvN50T3V5
+Suffix=MemEffV1
 
 # Running the scheduler for each of the workloads.
 for MEM in {1..9} ; do
@@ -25,7 +25,7 @@ for MEM in {1..9} ; do
       # Running the scheduler. Tweak the range to change the number of iterations.
       for j in {1..15} ; do
         # This is the command you run. Tweak it to what you are testing.
-        ./skeleton -c 0.${CPU} -i 0.${IO} -m 0.${MEM} -p 10000 -n 50 -t 3 -v 2 > Outputs/loop.txt
+        ./skeleton -c 0.${CPU} -i 0.${IO} -m 0.${MEM} -p 10000 -n 50 -t 4 -v 0 > Outputs/loop.txt
 
         # Reading the output of the scheduler and storing important data in an output file.
         while read -r line ;
@@ -70,11 +70,11 @@ for MEM in {1..9} ; do
         elif [[ $line == *"totale verwerkingstijd" ]] ; then
           type="exectime"
         elif [[ $line == "Gemiddelde waarde"* ]] ; then
-          echo $line | grep -Eo 'Gemiddelde waarde: \d*\.{0,1}\d*' | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/Graph/${type}-mean-C${CPU}_I${IO}_M${MEM}.txt
-          echo $line | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/Graph/${type}-spread-C${CPU}_I${IO}_M${MEM}.txt
+          echo $line | grep -Eo 'Gemiddelde waarde: \d*\.{0,1}\d*' | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/GData/${type}-mean-C${CPU}_I${IO}_M${MEM}.txt
+          echo $line | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/GData/${type}-spread-C${CPU}_I${IO}_M${MEM}.txt
         elif [[ $line == "Minimum waarde"* ]] ; then
-          echo $line | grep -Eo 'Minimum waarde: \d*\.{0,1}\d*' | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/Graph/${type}-minimum-C${CPU}_I${IO}_M${MEM}.txt
-          echo $line | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/Graph/${type}-maximum-C${CPU}_I${IO}_M${MEM}.txt
+          echo $line | grep -Eo 'Minimum waarde: \d*\.{0,1}\d*' | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/GData/${type}-minimum-C${CPU}_I${IO}_M${MEM}.txt
+          echo $line | grep -Eo '\d*\.{0,1}\d*$' >> Outputs/GData/${type}-maximum-C${CPU}_I${IO}_M${MEM}.txt
         fi
       done < "Outputs/Graph/UtilDataC${CPU}_I${IO}_M${MEM}.txt"
 
