@@ -2,13 +2,13 @@
 Tester for the Operating Systems course Schedulers. 
 
 ## Requirements
-Install `datamash`. This can be done using `brew` on MacOS:
+Install `datamash`. This can be done using `brew` on macOS:
 
 ```
 brew install datamash
 ```
 
-Also make sure you have a high enough version of `bash`. You can install a later version on MacOS like so:
+Also make sure you have a high enough version of `bash`. You can install a later version on macOS like so:
 
 `brew install bash`
 
